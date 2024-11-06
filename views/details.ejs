@@ -1,0 +1,21 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= book.title %> - 图书详情</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1><%= book.title %> - 详情</h1>
+  <table>
+    <tr><th>书名</th><td><%= book.title %></td></tr>
+    <tr><th>班级</th><td><%= book.class %></td></tr>
+    <tr><th>用户名</th><td><%= book.user_name %></td></tr>
+    <tr><th>电话</th><td><%= book.visibility.includes('phone') ? book.phone : '隐藏' %></td></tr>
+    <tr><th>图片</th><td><img src="<%= book.image_url %>" alt="Book Image"></td></tr>
+  </table>
+  <a href="/">返回首页</a>
+</body>
+</html>
