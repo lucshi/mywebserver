@@ -1,0 +1,48 @@
+<%- include('partials/header') %>
+
+<h2>我的物品</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>物品名称</th>
+            <th>新旧程度</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% items.forEach(item => { %>
+            <tr>
+                <td><%= item.name %></td>
+                <td><%= item.condition %></td>
+                <td><%= item.status %></td>
+                <td>
+                    <!-- 编辑按钮 -->
+                    <a href="/edit/<%= item.id %>" class="btn btn-warning">编辑</a>
+                    
+                    <!-- 删除按钮 -->
+                    <form action="/delete/<%= item.id %>" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">删除</button>
+                    </form>
+
+                    <!-- 下架按钮（如果状态是“已预订”，显示“下架”）-->
+                    <% if (item.status === '已预订') { %>
+                        <form action="/shelve/<%= item.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-dark">下架</button>
+                        </form>
+                    <% } %>
+
+                    <!-- 重新上架按钮（如果状态是“已预订”，显示“重新上架”）-->
+                    <% if (item.status === '已预订') { %>
+                        <form action="/unshelve/<%= item.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-success">重新上架</button>
+                        </form>
+                    <% } %>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<%- include('partials/footer') %>

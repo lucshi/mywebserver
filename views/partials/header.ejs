@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>北京市57中学流转平台</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #ffffff; /* 白色背景 */
+        }
+        .navbar {
+            background-color: #f8f9fa; /* 浅色的导航栏 */
+        }
+        .navbar-brand, .nav-link {
+            color: #343a40 !important; /* 深色字体 */
+        }
+        .container {
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #dee2e6; /* 灰色边框 */
+        }
+        .form-group label {
+            color: #343a40; /* 深色标签 */
+        }
+        .optional {
+            color: lightgray; /* 浅灰色字体 */
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">北京市57中学校园物品流转平台</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <% if (user && user.username) { %> <!-- 确保 user 对象存在 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/transfer">转让物品</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/my-books">我的</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">登出</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">注册</a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </nav>
+    
+<div class="container mt-4">

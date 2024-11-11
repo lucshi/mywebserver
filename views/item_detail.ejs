@@ -1,0 +1,42 @@
+<%- include('partials/header') %>
+
+<h2><%= item.name %> 的详细信息</h2>
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row no-gutters">
+        <% if (item.image) { %>
+            <div class="col-md-4">
+                <img src="<%= item.image %>" class="card-img" alt="物品图片">
+            </div>
+        <% } %>
+        <div class="col-md-8">
+            <div class="card-body">
+                <p class="card-text"><strong>新旧程度:</strong> <%= item.condition || '未提供' %></p>
+                <p class="card-text"><strong>联系人:</strong> <%= item.contact_name || '未提供' %></p>
+                <p class="card-text"><strong>联系方式:</strong> <%= item.contact || '未提供' %></p>
+                <p class="card-text"><strong>班级信息:</strong> <%= (item.grade || '未提供') + ' ' + (item.class_info || '未提供') %></p>
+                <p class="card-text"><strong>留言:</strong> <%= item.message || '未提供' %></p>
+                
+                <!-- 状态展示 -->
+                <p class="card-text">
+                    <strong>状态:</strong>
+                    <span class="badge" style="background-color: 
+                        <%= item.status === '可用' ? 'green' : item.status === '已预订' ? 'black' : 'gray' %>;
+                        color: white;">
+                        <%= item.status %>
+                    </span>
+                </p>
+
+                <!-- 联系对方按钮 -->
+                <% if (item.status === '可用') { %>
+                    <form action="/contact/<%= item.id %>" method="POST">
+                        <button type="submit" class="btn btn-primary">联系对方</button>
+                    </form>
+                <% } %>
+
+                <a href="/" class="btn btn-secondary">返回首页</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

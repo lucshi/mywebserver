@@ -1,33 +1,46 @@
+<%- include('partials/header') %>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>二手图书列表</title>
-  <link rel="stylesheet" href="/style.css">
-</head>
-<body>
-  <h1>二手图书列表</h1>
-  <table>
+<h2>物品列表</h2>
+
+<table class="table table-bordered">
     <thead>
-      <tr>
-        <th>书名</th>
-        <th>联系方式</th>
-        <th>销售状态</th>
-        <th>操作</th>
-      </tr>
+        <tr>
+            <th>物品名称</th>
+            <th>新旧程度</th>
+            <th>转让人班级</th>
+            <th>状态</th>
+            <th>物品图片</th> <!-- 显示图片 -->
+            <th>操作</th>
+        </tr>
     </thead>
     <tbody>
-      <% books.forEach(book => { %>
-        <tr>
-          <td><%= book.title %></td>
-          <td><%= book.contact %></td>
-          <td><%= book.status %></td>
-          <td><a href="/book/<%= book.id %>">查看详情</a></td>
-        </tr>
-      <% }) %>
+        <% items.forEach(item => { %>
+            <tr>
+                <td><%= item.name %></td>
+                <td><%= item.condition %></td>
+                <td><%= item.grade + item.class_info %></td> <!-- 显示年级 + 班级 -->
+                <td>
+                    <span class="badge" style="background-color: 
+                        <%= item.status === '可用' ? 'green' : item.status === '已预订' ? 'black' : 'gray' %>;
+                        color: white;">
+                        <%= item.status %>
+                    </span>
+                </td>
+                <!-- 显示物品图片 -->
+                <td>
+                    <% if (item.image) { %>
+                        <img src="<%= item.image %>" alt="物品图片" style="width: 100px; height: auto;">
+                    <% } else { %>
+                        <img src="/images/placeholder.png" alt="默认图片" style="width: 100px; height: auto;">
+                    <% } %>
+                </td>
+                <td>
+                    <!-- 查看详情按钮 -->
+                    <a href="/item/<%= item.id %>" class="btn btn-info">查看详情</a>
+                </td>
+            </tr>
+        <% }) %>
     </tbody>
-  </table>
-</body>
-</html>
+</table>
+
+<%- include('partials/footer') %>
