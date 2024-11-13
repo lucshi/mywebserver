@@ -7,7 +7,10 @@
         <tr>
             <th>物品名称</th>
             <th>新旧程度</th>
-            <th>状态</th>
+            <th>学校</th>
+            <th>地点</th>
+            <th>年级</th>
+            <th>班级</th>
             <th>操作</th>
         </tr>
     </thead>
@@ -16,27 +19,23 @@
             <tr>
                 <td><%= item.name %></td>
                 <td><%= item.condition %></td>
-                <td><%= item.status %></td>
+                <td><%= item.school %></td>
+                <td><%= item.location %></td>
+                <td><%= item.grade %></td>
+                <td><%= item.class_info %></td>
                 <td>
-                    <!-- 编辑按钮 -->
-                    <a href="/edit/<%= item.id %>" class="btn btn-warning">编辑</a>
-                    
-                    <!-- 删除按钮 -->
+                    <a href="/item/<%= item.id %>" class="btn btn-info btn-sm">查看详情</a>
+                    <a href="/edit/<%= item.id %>" class="btn btn-warning btn-sm">编辑</a>
                     <form action="/delete/<%= item.id %>" method="POST" style="display:inline;">
-                        <button type="submit" class="btn btn-danger">删除</button>
+                        <button type="submit" class="btn btn-danger btn-sm">删除</button>
                     </form>
-
-                    <!-- 下架按钮（如果状态是“已预订”，显示“下架”）-->
-                    <% if (item.status === '已预订') { %>
-                        <form action="/shelve/<%= item.id %>" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-dark">下架</button>
-                        </form>
-                    <% } %>
-
-                    <!-- 重新上架按钮（如果状态是“已预订”，显示“重新上架”）-->
-                    <% if (item.status === '已预订') { %>
+                    <% if (item.status === '可用') { %>
                         <form action="/unshelve/<%= item.id %>" method="POST" style="display:inline;">
-                            <button type="submit" class="btn btn-success">重新上架</button>
+                            <button type="submit" class="btn btn-secondary btn-sm">下架</button>
+                        </form>
+                    <% } else if (item.status === '已预订') { %>
+                        <form action="/shelve/<%= item.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-primary btn-sm">重新上架</button>
                         </form>
                     <% } %>
                 </td>

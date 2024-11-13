@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>联系对方</title>
+</head>
+<body>
+    <h1>联系卖家 - <%= item.name %></h1>
+    <p>联系人: <%= item.contact_name %></p>
+    <p>联系方式: <%= item.contact %></p>
+
+    <!-- 如果需要，可以添加一个按钮来更新物品状态 -->
+    <form action="/contact/<%= item.id %>" method="POST">
+        <button type="submit">将物品标记为已预订</button>
+    </form>
+</body>
+</html>

@@ -1,15 +1,18 @@
 <%- include('partials/header') %>
 
-<h2>修改书本信息</h2>
+<h2>修改物品信息</h2>
+
 <form action="/update/<%= book.id %>" method="POST" enctype="multipart/form-data">
+    <!-- 物品名称 -->
     <div class="form-group">
-        <label for="name">书名</label>
+        <label for="name">物品名称 <span class="required">*</span></label>
         <input type="text" class="form-control" id="name" name="name" value="<%= book.name %>" required>
     </div>
 
+    <!-- 新旧程度 -->
     <div class="form-group">
-        <label for="condition">新旧程度</label>
-        <select class="form-control" id="condition" name="condition">
+        <label for="condition">新旧程度 <span class="required">*</span></label>
+        <select class="form-control" id="condition" name="condition" required>
             <option value="全新" <%= book.condition === '全新' ? 'selected' : '' %>>全新</option>
             <option value="9成新" <%= book.condition === '9成新' ? 'selected' : '' %>>9成新</option>
             <option value="8成新" <%= book.condition === '8成新' ? 'selected' : '' %>>8成新</option>
@@ -18,59 +21,98 @@
         </select>
     </div>
 
-    <!-- 年级下拉框 -->
+    <!-- 学校名称 -->
     <div class="form-group">
-        <label for="grade">年级</label>
-        <select class="form-control" id="grade" name="grade" required>
-            <option value="1年级" <%= book.grade === '1年级' ? 'selected' : '' %>>1年级</option>
-            <option value="2年级" <%= book.grade === '2年级' ? 'selected' : '' %>>2年级</option>
-            <option value="3年级" <%= book.grade === '3年级' ? 'selected' : '' %>>3年级</option>
-            <option value="4年级" <%= book.grade === '4年级' ? 'selected' : '' %>>4年级</option>
-            <option value="5年级" <%= book.grade === '5年级' ? 'selected' : '' %>>5年级</option>
-            <option value="6年级" <%= book.grade === '6年级' ? 'selected' : '' %>>6年级</option>
-            <option value="初一" <%= book.grade === '初一' ? 'selected' : '' %>>初一</option>
-            <option value="初二" <%= book.grade === '初二' ? 'selected' : '' %>>初二</option>
-            <option value="初三" <%= book.grade === '初三' ? 'selected' : '' %>>初三</option>
-            <option value="高一" <%= book.grade === '高一' ? 'selected' : '' %>>高一</option>
-            <option value="高二" <%= book.grade === '高二' ? 'selected' : '' %>>高二</option>
-            <option value="高三" <%= book.grade === '高三' ? 'selected' : '' %>>高三</option>
+        <label for="school">学校名称 <span class="required">*</span></label>
+        <select class="form-control" id="school" name="school" required onchange="toggleNewField('school')">
+            <option value="<%= book.school %>"><%= book.school %></option>
+            <option value="add-new-school">手动添加新学校</option>
+        </select>
+        <input type="text" class="form-control mt-2" id="new_school" name="new_school" placeholder="请输入新的学校" style="display:none;">
+    </div>
+
+    <!-- 交易地点 -->
+    <div class="form-group">
+        <label for="location">交易地点 <span class="optional">(选填)</span></label>
+        <select class="form-control" id="location" name="location" onchange="toggleNewField('location')">
+            <option value="<%= book.location %>"><%= book.location %></option>
+            <option value="add-new-location">手动添加新地点</option>
+        </select>
+        <input type="text" class="form-control mt-2" id="new_location" name="new_location" placeholder="请输入新的交易地点" style="display:none;">
+    </div>
+
+    <!-- 年级 -->
+    <div class="form-group">
+        <label for="grade">年级 <span class="optional">(选填)</span></label>
+        <select class="form-control" id="grade" name="grade">
+            <option value="<%= book.grade %>"><%= book.grade %></option>
+            <option value="1">1年级</option>
+            <option value="2">2年级</option>
+            <option value="3">3年级</option>
+            <option value="4">4年级</option>
+            <option value="5">5年级</option>
+            <option value="6">6年级</option>
+            <option value="初一">初一</option>
+            <option value="初二">初二</option>
+            <option value="初三">初三</option>
+            <option value="高一">高一</option>
+            <option value="高二">高二</option>
+            <option value="高三">高三</option>
         </select>
     </div>
 
-    <!-- 班级下拉框 -->
+    <!-- 班级 -->
     <div class="form-group">
-        <label for="class_info">班级</label>
-        <select class="form-control" id="class_info" name="class_info" required>
+        <label for="class_info">班级 <span class="optional">(选填)</span></label>
+        <select class="form-control" id="class_info" name="class_info">
+            <option value="<%= book.class_info %>"><%= book.class_info %></option>
             <% for (let i = 1; i <= 30; i++) { %>
-                <option value="<%= i %>班" <%= book.class_info === i + '班' ? 'selected' : '' %>><%= i %>班</option>
+                <option value="<%= i %>班"><%= i %>班</option>
             <% } %>
         </select>
     </div>
 
+    <!-- 联系人姓名 -->
     <div class="form-group">
-        <label for="contact">联系方式</label>
-        <input type="text" class="form-control" id="contact" name="contact" value="<%= book.contact %>">
-    </div>
-
-    <div class="form-group">
-        <label for="contact_name">联系人姓名</label>
+        <label for="contact_name">联系人姓名 <span class="optional">(选填)</span></label>
         <input type="text" class="form-control" id="contact_name" name="contact_name" value="<%= book.contact_name %>">
     </div>
 
+    <!-- 联系电话 -->
     <div class="form-group">
-        <label for="message">留言</label>
+        <label for="contact">联系电话 <span class="required">*</span></label>
+        <input type="text" class="form-control" id="contact" name="contact" value="<%= book.contact %>" required>
+    </div>
+
+    <!-- 备注 -->
+    <div class="form-group">
+        <label for="message">备注 <span class="optional">(选填)</span></label>
         <textarea class="form-control" id="message" name="message" rows="3"><%= book.message %></textarea>
     </div>
 
+    <!-- 上传图片 -->
     <div class="form-group">
-        <label for="image">上传图片</label>
+        <label for="image">上传图片 <span class="optional">(选填)</span></label>
         <input type="file" class="form-control-file" id="image" name="image">
-        <small class="form-text text-muted">如果您不想更换图片，可以留空</small>
     </div>
 
-    <button type="submit" class="btn btn-primary">更新书本信息</button>
+    <button type="submit" class="btn btn-primary">更新物品信息</button>
 </form>
 
-<a href="/my-books" class="btn btn-secondary">返回我的书本</a>
+<a href="/my-books" class="btn btn-secondary">返回我的物品</a>
 
 <%- include('partials/footer') %>
+
+<script>
+// 显示/隐藏输入框
+function toggleNewField(type) {
+    const newField = document.getElementById(`new_${type}`);
+    const select = document.getElementById(type);
+
+    if (select.value === `add-new-${type}`) {
+        newField.style.display = 'block';
+    } else {
+        newField.style.display = 'none';
+    }
+}
+</script>
