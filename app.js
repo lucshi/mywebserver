@@ -60,6 +60,22 @@ const storage = multer.diskStorage({
     }
 });
 const upload = multer({ storage: storage });
+// 注册页面路由
+app.get('/register', (req, res) => {
+    res.render('register', { user: req.session ? req.session.user : null });
+});
+
+// 下架物品
+app.post('/unshelve/:id', ensureAuthenticated, (req, res) => {
+    const bookId = req.params.id;
+    db.run("UPDATE books SET status = '已预订' WHERE id = ?", [bookId], function(err) {
+        if (err) {
+            console.error("数据库更新错误:", err);
+            return res.status(500).send("数据库错误");
+        }
+        res.redirect('/my-books'); // 更新后重定向到“我的物品”页面
+    });
+});
 
 // 确保用户已登录
 function ensureAuthenticated(req, res, next) {
